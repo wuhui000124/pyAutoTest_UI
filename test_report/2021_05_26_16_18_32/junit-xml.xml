@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="6" time="123.772" timestamp="2021-05-26T16:18:32.999562" hostname="DESKTOP-4F4FJ4M"><testcase classname="test_dir.test_lggsLogin.TestLggsLogin" name="test_lggs_loginAdmin_case" time="10.751" /><testcase classname="test_dir.test_lggsLogin.TestLggsLogin" name="test_lggs_loginYYJG_case" time="10.954" /><testcase classname="test_dir.test_lggsLogin.TestLggsLogin" name="test_lggs_loginQSF_case" time="10.770" /><testcase classname="test_dir.test_lggsLogin.TestLggsLogin" name="test_lggs_loginPSF_case" time="10.664" /><testcase classname="test_dir.test_lggsLogin.TestLggsLogin" name="test_lggs_loginJSF_case" time="10.812" /><testcase classname="test_dir.test_lggsLogin.TestLggsLogin" name="test_lggs_loginERR_case" time="32.366"><failure message="selenium.common.exceptions.NoSuchElementException: Message: ❌ Find 0 elements through: xpath=/html/body/app-root/div[1]/tool-bar-container/mat-toolbar/nav/ul/button[2]/span">self = &lt;test_dir.test_lggsLogin.TestLggsLogin object at 0x0000022CFBB29AF0&gt;
+browser = &lt;selenium.webdriver.chrome.webdriver.WebDriver (session="dd291971aa29e60d971e9d0173781181")&gt;
+base_url = 'https://cloudtest.gdgs.tech/'
+
+    def test_lggs_loginERR_case(self, browser, base_url):
+        """
+        名称：理工亘舒云监控平台错误账号登录
+        步骤：
+        1、打开云监控平台
+        2、输入用户名密码
+        3、点击登录按钮
+        检查点：
+        * 检查登录后页面右上角是否显示账号名称
+        """
+        page=LggsPage(browser)
+        page.get(base_url)
+        page.loginUser_input='13900000005'
+        page.loginPasswd_input='12345'
+        page.login_button.click()
+        sleep(2)
+&gt;       assert page.user_span.text=='jieshou'
+
+test_dir\test_lggsLogin.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\pyAutoTest_UI\lib\site-packages\poium\page_objects.py:252: in text
+    elem = self.__get_element(self.k, self.v)
+..\..\pyAutoTest_UI\lib\site-packages\poium\page_objects.py:155: in __get_element
+    self.__find_element((By.XPATH, value))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;poium.page_objects.Element object at 0x0000022CFAFCE4C0&gt;
+elem = ('xpath', '/html/body/app-root/div[1]/tool-bar-container/mat-toolbar/nav/ul/button[2]/span')
+
+    def __find_element(self, elem):
+        """
+        Find if the element exists.
+        """
+        for i in range(self.timeout):
+            try:
+                elems = self.__elements(elem[0], elem[1])
+            except FunctionTimedOut:
+                elems = []
+    
+            if len(elems) == 1:
+                logging.info("✅ Find element: {by}={value} ".format(
+                    by=elem[0], value=elem[1]))
+                break
+            elif len(elems) &gt; 1:
+                logging.info("❓ Find {n} elements through: {by}={value}".format(
+                    n=len(elems), by=elem[0], value=elem[1]))
+                break
+            else:
+                sleep(1)
+        else:
+            error_msg = "❌ Find 0 elements through: {by}={value}".format(by=elem[0], value=elem[1])
+            logging.error(error_msg)
+&gt;           raise NoSuchElementException(error_msg)
+E           selenium.common.exceptions.NoSuchElementException: Message: ❌ Find 0 elements through: xpath=/html/body/app-root/div[1]/tool-bar-container/mat-toolbar/nav/ul/button[2]/span
+
+..\..\pyAutoTest_UI\lib\site-packages\poium\page_objects.py:128: NoSuchElementException</failure></testcase></testsuite></testsuites>
