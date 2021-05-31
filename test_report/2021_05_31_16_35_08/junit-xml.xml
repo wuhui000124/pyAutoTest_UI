@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="13.224" timestamp="2021-05-31T16:35:09.037657" hostname="DESKTOP-4F4FJ4M"><testcase classname="test_dir.test_lggsLogin.TestLggsLogin" name="test_lggs_loginAdmin_case" time="12.930"><failure message="pytest_assume.plugin.FailedAssumption: &#10;1 Failed Assumptions:&#10;&#10;test_dir\test_lggsLogin.py:36: AssumptionFailure&#10;&gt;&gt;&#09;pytest.assume(0 == 1)&#10;AssertionError: assert False">tp = &lt;class 'pytest_assume.plugin.FailedAssumption'&gt;, value = None, tb = None
+
+    def reraise(tp, value, tb=None):
+        try:
+            if value is None:
+                value = tp()
+            if value.__traceback__ is not tb:
+&gt;               raise value.with_traceback(tb)
+E               pytest_assume.plugin.FailedAssumption: 
+E               1 Failed Assumptions:
+E               
+E               test_dir\test_lggsLogin.py:36: AssumptionFailure
+E               &gt;&gt;	pytest.assume(0 == 1)
+E               AssertionError: assert False
+
+..\..\pyAutoTest_UI\lib\site-packages\six.py:718: FailedAssumption</failure></testcase></testsuite></testsuites>

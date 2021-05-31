@@ -1,4 +1,4 @@
-"""L
+"""
 @author:  伍辉
 @data: 2021-5-26
 @function python 基本用法
@@ -7,9 +7,10 @@ import sys
 from time import sleep
 import pytest
 from os.path import dirname, abspath
+import erros
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
 from page.lggs_page import LggsPage
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
 class TestLggsLogin:
     '''理工亘舒云监控平台登录测试'''
@@ -24,13 +25,41 @@ class TestLggsLogin:
         检查点：
         * 检查登录后页面右上角是否显示账号名称
         """
+
         page=LggsPage(browser)
         page.get(base_url)
         page.loginUser_input='admin'
         page.loginPasswd_input='123456'
         page.login_button.click()
         sleep(2)
-        assert page.user_span.text=='管理员'
+        pytest.assume(page.user_span.text == '管理员1')
+        if (page.user_span.text != '管理员1'):
+            erros.errors_add('admin账号登录用例失败')
+
+        #退出登录
+        page.user_span.click()
+        page.logOut_button.click()
+        sleep(1)
+
+    def test_lggs_loginERR_case(self, browser, base_url):
+        """
+        名称：理工亘舒云监控平台错误账号登录
+        步骤：
+        1、打开云监控平台
+        2、输入用户名密码
+        3、点击登录按钮
+        检查点：
+        * 检查登录后页面右上角是否显示账号名称
+        """
+        page=LggsPage(browser)
+        page.get(base_url)
+        page.loginUser_input='admin'
+        page.loginPasswd_input='12345'
+        page.login_button.click()
+        sleep(1)
+        pytest.assume(page.login_span.text == '登录')
+        if (page.login_span.text != '登录'):
+            erros.errors_add('错误账号登录用例失败')
 
     def test_lggs_loginYYJG_case(self, browser, base_url):
         """
@@ -48,7 +77,14 @@ class TestLggsLogin:
         page.loginPasswd_input='123456'
         page.login_button.click()
         sleep(2)
-        assert page.user_span.text=='自动化测试运营机构账号'
+        pytest.assume(page.user_span.text == '自动化测试运营机构账号')
+        if (page.user_span.text != '自动化测试运营机构账号'):
+            erros.errors_add('运营机构账号登录用例失败')
+
+        # 退出登录
+        page.user_span.click()
+        page.logOut_button.click()
+        sleep(1)
 
     def test_lggs_loginQSF_case(self, browser, base_url):
         """
@@ -66,7 +102,13 @@ class TestLggsLogin:
         page.loginPasswd_input='123456'
         page.login_button.click()
         sleep(2)
-        assert page.user_span.text=='qisong'
+        pytest.assume(page.user_span.text == 'qisong')
+        if (page.user_span.text != 'qisong'):
+            erros.errors_add('起送方账号登录用例失败')
+        # 退出登录
+        page.user_span.click()
+        page.logOut_button.click()
+        sleep(1)
 
     def test_lggs_loginPSF_case(self, browser, base_url):
         """
@@ -84,7 +126,13 @@ class TestLggsLogin:
         page.loginPasswd_input='123456'
         page.login_button.click()
         sleep(2)
-        assert page.user_span.text=='peisongWeb'
+        pytest.assume(page.user_span.text == 'peisongWeb')
+        if (page.user_span.text != 'peisongWeb'):
+            erros.errors_add('配送方账号登录用例失败')
+        # 退出登录
+        page.user_span.click()
+        page.logOut_button.click()
+        sleep(1)
 
     def test_lggs_loginJSF_case(self, browser, base_url):
         """
@@ -102,26 +150,10 @@ class TestLggsLogin:
         page.loginPasswd_input='123456'
         page.login_button.click()
         sleep(2)
-        assert page.user_span.text=='jieshou'
-
-    def test_lggs_loginERR_case(self, browser, base_url):
-        """
-        名称：理工亘舒云监控平台错误账号登录
-        步骤：
-        1、打开云监控平台
-        2、输入用户名密码
-        3、点击登录按钮
-        检查点：
-        * 检查登录后页面右上角是否显示账号名称
-        """
-        page=LggsPage(browser)
-        page.get(base_url)
-        page.loginUser_input='13900000005'
-        page.loginPasswd_input='12345'
-        page.login_button.click()
-        sleep(2)
-        assert page.user_span.text=='jieshou'
+        pytest.assume(page.user_span.text == 'jieshou')
+        if (page.user_span.text != 'jieshou'):
+            erros.errors_add('接收方账号登录用例失败')
 
 if __name__ == '__main__':
     #pytest.main(["-v", "-s", "test_lggsLogin.py"])
-    pytest.main(["-v", "-s", "test_lggsLogin.py::TestLggsLogin::test_lggs_loginERR_case"])
+    pytest.main(["-v", "-s", "test_lggsLogin.py::TestLggsLogin::test_lggs_loginAdmin_case"])

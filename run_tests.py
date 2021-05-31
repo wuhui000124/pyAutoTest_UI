@@ -4,6 +4,8 @@ import time
 import logging
 import pytest
 import click
+import yagmail as yagmail
+import erros
 from conftest import REPORT_DIR
 from config import RunConfig
 
@@ -26,7 +28,21 @@ def init_env(new_report):
     os.mkdir(new_report)
     os.mkdir(new_report + "/image")
     
+#把测试报告作为附件发送到指定邮箱
+def send_mail(report):
+ yag = yagmail.SMTP(user="wuhui@lggs.tech",
+ password="Admin@55555",
+ host='smtp.lggs.tech',)
+ subject = "理工亘舒云监控平台ui自动化测试报告"
+ contents = "<b>理工亘舒UI自动化测试过程中出现以下报错信息:</b>"
+ mail_tail = "<p style=\"color:blue\">测试详情请参考自动化测试报告！</p>"
 
+ # 添加错误列表数据
+ for error in erros.errors:
+     contents = contents + '<p style=\"color:red\">' + str(error) + '</p>'
+ contents+=mail_tail
+ yag.send('wuhui@lggs.tech', subject, contents, report)
+ print('邮件已发送')
 
 @click.command()
 @click.option('-m', default=None, help='输入运行模式：run 或 debug.')
@@ -46,6 +62,11 @@ def run(m):
                      "--reruns", RunConfig.rerun
                      ])
         logger.info("运行结束，生成测试报告♥❤！")
+
+        # 发送报告邮件
+        if(erros.is_error()):
+            send_mail(html_report)
+
     elif m == "debug":
         print("debug模式，开始执行！")
         pytest.main(["-v", "-s", RunConfig.cases_path])

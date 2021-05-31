@@ -12,6 +12,9 @@ class RunConfig:
     # 运行测试用例单个文件
     cases_path = os.path.join(PRO_PATH, "test_dir", "test_lggsLogin.py")
 
+    # 运行测试用例单个文件下单个用例
+    #cases_path = os.path.join(PRO_PATH, "test_dir", "test_lggsLogin.py::TestLggsLogin::test_lggs_loginAdmin_case")
+
     # 配置浏览器驱动类型(chrome/firefox/chrome-headless/firefox-headless)。
     driver_type = "chrome"
 
@@ -19,7 +22,7 @@ class RunConfig:
     url = "https://cloudtest.gdgs.tech/"
 
     # 失败重跑次数
-    rerun = "1"
+    rerun = "0"
 
     # 当达到最大失败数，停止执行
     max_fail = "5"
