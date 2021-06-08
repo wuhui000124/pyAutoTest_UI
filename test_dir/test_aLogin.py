@@ -8,7 +8,6 @@ from time import sleep
 import pytest
 from os.path import dirname, abspath
 import erros
-
 from page.lggs_page import LggsPage
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
@@ -32,8 +31,8 @@ class TestLggsLogin:
         page.loginPasswd_input='123456'
         page.login_button.click()
         sleep(2)
-        pytest.assume(page.user_span.text == '管理员1')
-        if (page.user_span.text != '管理员1'):
+        pytest.assume(page.user_span.text == '管理员')
+        if (page.user_span.text != '管理员'):
             erros.errors_add('admin账号登录用例失败')
 
         #退出登录
@@ -155,5 +154,5 @@ class TestLggsLogin:
             erros.errors_add('接收方账号登录用例失败')
 
 if __name__ == '__main__':
-    #pytest.main(["-v", "-s", "test_lggsLogin.py"])
-    pytest.main(["-v", "-s", "test_lggsLogin.py::TestLggsLogin::test_lggs_loginAdmin_case"])
+    #pytest.main(["-v", "-s", "test_aLogin.py"])
+    pytest.main(["-v", "-s", "test_aLogin.py::TestLggsLogin::test_lggs_loginAdmin_case"])

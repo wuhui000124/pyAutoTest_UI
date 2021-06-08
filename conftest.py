@@ -101,7 +101,7 @@ def capture_screenshots(case_name):
 
 
 # 启动浏览器
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope='module', autouse=True)
 def browser():
     """
     全局定义浏览器驱动
@@ -150,7 +150,7 @@ def browser():
 
 
 # 关闭浏览器
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="module", autouse=True)
 def browser_close():
     yield driver
     driver.quit()

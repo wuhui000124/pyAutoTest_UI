@@ -2,6 +2,7 @@
 import os
 import time
 import logging
+
 import pytest
 import click
 import yagmail as yagmail
